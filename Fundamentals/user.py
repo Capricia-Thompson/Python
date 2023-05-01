@@ -40,17 +40,11 @@ class User:
 
 admin = User("Capricia", "Thompson", "thompsoncapricia@gmail.com", 31)
 
-admin.display_info().enroll()
+admin.display_info().enroll().spend_points(50).display_info().enroll()
 
 user2 = User("Jane", "Doe", "jdoe@gmail.com", 22)
 user3 = User("John", "Smith", "smithj@gmail.com", 38)
 
-admin.spend_points(50)
-user2.enroll().spend_points(80)
 
-admin.display_info()
-user2.display_info()
-user3.display_info()
-
-admin.enroll()
-user3.spend_points(40)
+user2.enroll().spend_points(80).display_info()
+user3.display_info().spend_points(40)
