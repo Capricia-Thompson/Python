@@ -42,7 +42,9 @@ def iterateDictionary(some_list):
     for x in some_list:
         set = ''
         for key in x:
-            set += f"{key} -  {x[key]}, "
+            set += f"{key} -  {x[key]}"
+            if key == 'first_name':
+                set += f", "
         print(set)
 
 
