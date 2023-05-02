@@ -40,8 +40,8 @@ class User:
 
 
 class BankAccount:
-    def __init__(self, type, int_rate, balance=0):
-        self.int_rate = 0.01
+    def __init__(self, type, int_rate=0.01, balance=0):
+        self.int_rate = int_rate
         self.type = type
         self.balance = balance
 

@@ -20,12 +20,6 @@ students = [{'first_name': 'Michael', 'last_name': 'Jordan'},
             {'first_name': 'KB', 'last_name': 'Tonel'}]
 
 
-def iterateDictionary(some_list):
-    for x in some_list:
-        for key in x:
-            print(key, " - ", x[key])
-
-
 def iterateDictionary2(key_name, some_list):
     for x in some_list:
         print(x[key_name])
@@ -42,3 +36,14 @@ def printInfo(some_dict):
         print(len(some_dict[x]), x)
         for y in some_dict[x]:
             print(y)
+
+
+def iterateDictionary(some_list):
+    for x in some_list:
+        set = ''
+        for key in x:
+            set += f"{key} -  {x[key]}, "
+        print(set)
+
+
+iterateDictionary(students)
