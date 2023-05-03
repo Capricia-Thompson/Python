@@ -2,47 +2,43 @@ class User:
     def __init__(self, name, email):
         self.name = name
         self.email = email
-        self.checking = BankAccount(
-            'checking', int_rate=0.02, balance=0)
-        self.savings = BankAccount('savings', int_rate=0.02, balance=0)
+        self.accounts = {'checking': BankAccount(
+            name='Checking'), 'savings': BankAccount(name='Savings', int_rate=0.05)}
 
-    def make_deposit(self, amount, account):
-        selection = self.select_account(account)
-        selection.deposit(amount)
-        print(f"${amount} deposited to {account.title()} account.")
-        return self
-
-    def make_withdrawal(self, amount, account):
-        selection = self.select_account(account)
-        selection.withdraw(amount)
-        print(f"${amount} withdrawn from {account.title()} account.")
-        return self
-
-    def display_user_balance(self):
-        print(f"Checking balance: ${self.checking.balance}")
-        print(f"Savings balance: ${self.savings.balance}")
-        return self
-
-    def select_account(self, account):
-        if account == 'checking':
-            return self.checking
-        elif account == 'savings':
-            return self.savings
-
-    def transfer_money(self, from_account, to_user, to_account, amount):
-        from_selection = self.select_account(from_account)
-        from_selection.withdraw(amount)
-        to_selection = to_user.select_account(to_account)
-        to_selection.deposit(amount)
+    def make_deposit(self, amount, acct):
+        self.accounts[acct].deposit(amount)
+        print(f"${amount} deposited to {self.accounts[acct].name} account.")
         print(
-            f"${amount} transfered from {from_account.title()} account to {to_user.name}'s {to_account.title()}.")
+            f"{self.accounts[acct].name} balance: ${self.accounts[acct].balance}")
+        return self
+
+    def make_withdrawal(self, amount, acct):
+        self.accounts[acct].deposit(amount)
+        print(f"${amount} withdrawn from {self.accounts[acct].name} account.")
+        print(
+            f"{self.accounts[acct].name} balance: ${self.accounts[acct].balance}")
+        return self
+
+    def display_user_balances(self):
+        for acct in self.accounts:
+            print(
+                f"{self.accounts[acct].name} balance: ${self.accounts[acct].balance}")
+        return self
+
+    def transfer_money(self, from_acct, to_user, to_acct, amount):
+        self.accounts[from_acct].withdraw(amount)
+        to_user.accounts[to_acct].deposit(amount)
+        print(
+            f"${amount} transfered from {self.accounts[from_acct].name} account to {to_user.name}'s {to_user.accounts[to_acct].name}.")
+        print(
+            f"{self.accounts[from_acct].name} balance: ${self.accounts[from_acct].balance}")
         return self
 
 
 class BankAccount:
-    def __init__(self, type, int_rate=0.01, balance=0):
+    def __init__(self, name, int_rate=0.01, balance=0):
         self.int_rate = int_rate
-        self.type = type
+        self.name = name
         self.balance = balance
 
     def deposit(self, amount):
@@ -72,8 +68,8 @@ user2 = User('Lynn', 'lynn@email.com')
 user3 = User('Bob', 'bob@email.com')
 
 user1.make_deposit(500, 'savings').make_deposit(
-    500, 'checking').make_withdrawal(150, 'checking').display_user_balance()
+    500, 'checking').make_withdrawal(150, 'checking')
 
-user1.transfer_money('checking', user2, 'savings', 100).display_user_balance()
+user1.transfer_money('checking', user2, 'savings', 100)
 
-user2.display_user_balance()
+user2.display_user_balances()
